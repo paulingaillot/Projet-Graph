@@ -1,0 +1,40 @@
+# Set separator of data lines and grid to plot
+set datafile separator ";"
+set grid
+
+# Set names of stuff
+set title "Execution Time For Algorithms"
+set xlabel "Number of Elements"
+set ylabel "Execution Time (in sec)"
+
+# Set logscale to compare execution time
+
+#set logscale y
+
+# Set line style, color, width, blabla
+set style line 1 linecolor rgb '#ff0000' linetype 1 linewidth 2
+set style line 2 linecolor rgb '#00ff00' linetype 1 linewidth 2
+set style line 3 linecolor rgb '#0000ff' linetype 1 linewidth 2
+set style line 4 linecolor rgb '#00ffff' linetype 1 linewidth 2
+
+# Prepare the function
+fac(x) = (int(x)==0) ? 1.0 : int(x) * fac(int(x)-1.0)
+f(x) = c* fac(x)
+
+# Fit the function to data
+fit f(x) 'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_exact.txt' via c
+
+# Save value of c to show in the function
+
+title_f(c) = sprintf("f(x) = c*x^(2), c = %f", c)
+
+# Automatic scaling of axes
+set autoscale xy
+
+# Plot both data and function (data with continuous line)
+# plot 'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_constr.txt' title 'Constructive Algorithm' with lines linestyle 1, 'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_exact.txt' title 'Exact Algorithm' with lines linestyle 2,  'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_local.txt' title 'Local Search Algorithm' with lines linestyle 3,  'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_meta.txt' title 'Meta Heuristic Algorithm' with lines linestyle 4
+
+
+# Plot both data and function (data with points)
+plot 'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_exact.txt' title 'Constructive Algorithm'  with lines linestyle 1, f(x) title title_f(c) with lines linestyle 3
+# plot 'C:\Users\Pauli\OneDrive - yncréa\Bureau\Projet_C\Projet_Graph\cmake-build-debug\result_constr.txt 'data', title title_f(c)  with lines linestyle 2 linecolor red
